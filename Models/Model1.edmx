@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamePet" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Species" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Breed" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Weigth" Type="int" Nullable="false" />
+          <Property Name="OwnersId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Pets.dbo.Pets_And_Owners' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Pets_And_Owners">
+          <Key>
+            <PropertyRef Name="Порода" />
+            <PropertyRef Name="Пол" />
+            <PropertyRef Name="Имя питомца" />
+            <PropertyRef Name="Имя" />
+            <PropertyRef Name="Телефон" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="OwnersId" />
+          </Key>
+          <Property Name="Порода" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Пол" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Имя питомца" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Телефон" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="OwnersId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Animals_Owners">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
+          <End Role="Animals" Type="Self.Animals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="OwnersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PetsModelStoreContainer">
+          <EntitySet Name="Animals" EntityType="Self.Animals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pets_And_Owners" EntityType="Self.Pets_And_Owners" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Pets_And_Owners].[Порода] AS [Порода], 
+    [Pets_And_Owners].[Пол] AS [Пол], 
+    [Pets_And_Owners].[Имя питомца] AS [Имя питомца], 
+    [Pets_And_Owners].[Имя] AS [Имя], 
+    [Pets_And_Owners].[Телефон] AS [Телефон], 
+    [Pets_And_Owners].[Id] AS [Id], 
+    [Pets_And_Owners].[OwnersId] AS [OwnersId]
+    FROM [dbo].[Pets_And_Owners] AS [Pets_And_Owners]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Animals_Owners" Association="Self.FK_Animals_Owners">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PetsEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Animals" EntityType="PetsModel.Animals" />
+          <EntitySet Name="Owners" EntityType="PetsModel.Owners" />
+          <EntitySet Name="Pets_And_Owners" EntityType="PetsModel.Pets_And_Owners" />
+          <AssociationSet Name="FK_Animals_Owners" Association="PetsModel.FK_Animals_Owners">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamePet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Species" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Breed" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Weigth" Type="Int32" Nullable="false" />
+          <Property Name="OwnersId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Owners" Relationship="PetsModel.FK_Animals_Owners" FromRole="Animals" ToRole="Owners" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Animals" Relationship="PetsModel.FK_Animals_Owners" FromRole="Owners" ToRole="Animals" />
+        </EntityType>
+        <EntityType Name="Pets_And_Owners">
+          <Key>
+            <PropertyRef Name="Порода" />
+            <PropertyRef Name="Пол" />
+            <PropertyRef Name="Имя_питомца" />
+            <PropertyRef Name="Имя" />
+            <PropertyRef Name="Телефон" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="OwnersId" />
+          </Key>
+          <Property Name="Порода" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Пол" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Имя_питомца" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Имя" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Телефон" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="OwnersId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Animals_Owners">
+          <End Type="PetsModel.Owners" Role="Owners" Multiplicity="1" />
+          <End Type="PetsModel.Animals" Role="Animals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="OwnersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PetsModelStoreContainer" CdmEntityContainer="PetsEntities1">
+          <EntitySetMapping Name="Animals">
+            <EntityTypeMapping TypeName="PetsModel.Animals">
+              <MappingFragment StoreEntitySet="Animals">
+                <ScalarProperty Name="OwnersId" ColumnName="OwnersId" />
+                <ScalarProperty Name="Weigth" ColumnName="Weigth" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Breed" ColumnName="Breed" />
+                <ScalarProperty Name="Species" ColumnName="Species" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="NamePet" ColumnName="NamePet" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owners">
+            <EntityTypeMapping TypeName="PetsModel.Owners">
+              <MappingFragment StoreEntitySet="Owners">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pets_And_Owners">
+            <EntityTypeMapping TypeName="PetsModel.Pets_And_Owners">
+              <MappingFragment StoreEntitySet="Pets_And_Owners">
+                <ScalarProperty Name="OwnersId" ColumnName="OwnersId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Имя_питомца" ColumnName="Имя питомца" />
+                <ScalarProperty Name="Пол" ColumnName="Пол" />
+                <ScalarProperty Name="Порода" ColumnName="Порода" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="05821cd9c5cc48ed8f99ace9ea2f0768" Name="Diagram1">
+        <EntityTypeShape EntityType="PetsModel.Animals" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="PetsModel.Owners" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="PetsModel.Pets_And_Owners" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="PetsModel.FK_Animals_Owners" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
